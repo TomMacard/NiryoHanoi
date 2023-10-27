@@ -28,9 +28,8 @@ def action_ia(jeu,action,marqueur):
     while p3==0:
         p3=jeu.piquet3[i]
         i=i+1
-
     #print(p1,p2,p3)
-    
+
     #cas initial
     if marqueur[0]==0:
         return((1,2),(23,True))
@@ -46,8 +45,7 @@ def action_ia(jeu,action,marqueur):
             if p1<p2:
                 return((1,2),(31,False))
             else:
-                return((2,1),(31,False))
-            
+                return((2,1),(31,False))        
         if action==(3,1):
             if p3<p2:
                 return((3,2),(12,False))
