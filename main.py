@@ -12,6 +12,8 @@ action=(0,0)
 jeu = TourHanoi(niveau)
 jeu.dessine_jeu()
 
+dpl = 0
+
 continuer = True
 
 while continuer :
@@ -24,9 +26,18 @@ while continuer :
 
     if action[0]==0 and action[1]==0 :
         continuer = False
+    elif action[0]==-2 and action[1]==-2 :
+        if jeu.annuler_dernier_mouvement():
+            jeu.dessine_jeu()
+            dpl = dpl + 1
+        print(">> Nombre de dépalcements : ", dpl)
+
     elif action[0]!= -1 and action[1] != -1:
         if jeu.deplacer_disque(action[0], action[1]) == 0:
             jeu.dessine_jeu()
+            jeu.sauvegarder_dep(action[0], action[1])
+            dpl = dpl + 1
+            print(">> Nombre de dépalcements : ", dpl)
     else:
         print("On arrive jamais ici !")
 

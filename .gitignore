@@ -33,3 +33,6 @@
 
 #Python
 *.pyc
+__pycache__/hanoi.cpython-311.pyc
+
+__pycache__/ia.cpython-311.pyc
