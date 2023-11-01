@@ -21,11 +21,14 @@ def choix_de_niveau():
         except ValueError:
             print("Veuillez entrer un entier !")
 def action_utilisateur():
-    input_string = input("\nEntrez les numeros du piquet de depart, d'arrivée (ou 'q' pour quitter) séparés par des virgules : ")
+    input_string = input("\nEntrez les numeros du piquet de depart, d'arrivée (ou 'q' pour quitter,'a' pour retourner en arriere) séparés par des virgules : ")
 
     if input_string.strip().lower() == 'q':
         print("Vous avez choisi de quitter !")
         return (0,0)
+    elif input_string.strip().lower() == 'a':
+        print("Retour en arrière !")
+        return (-2,-2)
     else:
         numbers = input_string.split(',')
 
@@ -63,6 +66,7 @@ class TourHanoi:
     def __init__(self, niveau):
         self.niveau = niveau
         self.max_symbole = nbre_symbole(niveau)
+        self.deps_prec = []
 
         for i in range(niveau):
             self.piquet1.append(i+1)
@@ -264,3 +268,20 @@ class TourHanoi:
             else:
                 print("Mouvement interdit !")
                 return 1
+    def sauvegarder_dep(self, p1, p2):
+        # Ajoutez l'état actuel des piquets à la pile
+        # il faut que ca n'enregistre pas dans dep si je tape a
+        dep_courant = (p1,p2)
+        self.deps_prec.append(dep_courant)
+
+    def annuler_dernier_mouvement(self):
+        # Annule le dernier mouvement en restaurant l'état précédent des piquets
+        if self.deps_prec:
+            dernier_dep = self.deps_prec.pop()
+            print(dernier_dep[1])
+            print(dernier_dep[0]) 
+            self.deplacer_disque(dernier_dep[1], dernier_dep[0])
+            return True
+        else:
+            print("Aucun mouvement à annuler.")
+            return False
