@@ -19,9 +19,7 @@ class DraggableDisc(QGraphicsRectItem):
         for i in range(3):
             tower_x = self.mainWindow.tower_center(i)
             if abs(self.x() + self.rect().width()/2 - tower_x) < 50:
-                new_y_position = self.mainWindow.get_new_y_position(i, self)
-                self.setPos(tower_x - self.rect().width()/2, new_y_position)
-                self.originalPosition = self.pos()  # Mise à jour de la position initiale
+                self.mainWindow.update_disc_positions(i, self)
                 return
         self.setPos(self.originalPosition)
 
@@ -61,22 +59,21 @@ class HanoiTower(QMainWindow):
             disc = DraggableDisc(QRectF(self.tower_center(0) - disc_width/2, 500 - i * disc_height, disc_width, disc_height), self)
             self.scene.addItem(disc)
 
-    
-    def get_new_y_position(self, tower_index, disc):
-        """ Calcule la position y pour le nouveau disque sur la tour. """
-        discs_on_tower = [item for item in self.scene.items() if isinstance(item, DraggableDisc) and item != disc and self.tower_center(tower_index) - 50 < item.x() + item.rect().width()/2 < self.tower_center(tower_index) + 50]
-    
-        # La position initiale de y pour le bas de la tour
-        base_y_position = 500  # hauteur initiale
-    
-        total_height_of_discs = sum(d.rect().height() for d in discs_on_tower)
-    
-        new_y_position = base_y_position - total_height_of_discs - disc.rect().height()
+    def update_disc_positions(self, tower_index, moved_disc):
+        """ Met à jour la position de tous les disques sur la tour spécifiée. """
+        discs_on_tower = [item for item in self.scene.items() if isinstance(item, DraggableDisc) and self.tower_center(tower_index) - 50 < item.x() + item.rect().width()/2 < self.tower_center(tower_index) + 50]
+        discs_on_tower.sort(key=lambda x: x.y(), reverse=True)
 
-        return new_y_position
+        # La position de y pour le bas de la tour
+        y_position = 500  # Position de y pour la base de la tour
 
+        for disc in discs_on_tower:
+            disc.setPos(self.tower_center(tower_index) - disc.rect().width()/2, y_position - disc.rect().height())
+            y_position -= disc.rect().height()
 
-
+        # Mettre à jour la position du disque déplacé et le mettre en haut de la pile
+        moved_disc.setPos(self.tower_center(tower_index) - moved_disc.rect().width()/2, y_position - moved_disc.rect().height())
+        moved_disc.originalPosition = moved_disc.pos()  # Mise à jour de la position initiale
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
