@@ -107,18 +107,7 @@ def decalage(L):
         n=0.057
     elif n==4:
         n=0.07
-    print(n)
     return(n)
-
-"""
-def decalage(L):
-    n=0
-    for k in range (len(L)-1):
-        if L[k]!=0:
-            n=n+tailledisque
-    print(n)
-    return(n)
-"""
 
 
 

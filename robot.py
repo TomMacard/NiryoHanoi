@@ -14,6 +14,7 @@ iprobot="10.10.101.34"
 from pyniryo2 import *
 import math
 from robottools import *
+from voix import *
 
 # connexion, calibration
 print("Connexion...")
@@ -56,6 +57,10 @@ def jeuhanoi():
     niveau = choix_de_niveau()
 
     choixia= choix_ia()
+
+    if not choixia:
+        choixvoix=choix_voix()
+
     marqueur=(0,0) # 1er chiffre: dernier mouvement du petit, 2eme : si le dernier mouvement etait le petit
     action=(0,0)
 
@@ -69,7 +74,10 @@ def jeuhanoi():
     while continuer :
 
         if not choixia:
-            action = action_utilisateur()
+            if not choixvoix:
+                action = action_utilisateur()
+            else:
+                action = action_voix()
         else:
             (action,marqueur) = action_ia(jeu,action,marqueur)
             time.sleep(0.7)
