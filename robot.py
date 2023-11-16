@@ -28,6 +28,7 @@ if robot.arm.need_calibration():
     robot.arm.calibrate_auto()
 print("OK")
 
+
 # equiper outil
 print("Equipement pince...")
 try:

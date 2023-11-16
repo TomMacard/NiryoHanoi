@@ -50,8 +50,8 @@ def mouvrelatif(robot):
 
 
 espacement=0.16
-tailledisque=0.025
-hauteur=0.27
+tailledisque=0.030
+hauteur=0.25
 
 def robothanoi(robot,action,p1,p2,p3):
 
@@ -81,12 +81,12 @@ def robothanoi(robot,action,p1,p2,p3):
     print("Mouvement 2")
     if action[1]==1:
         robot.arm.shift_pose(RobotAxis.Y, -espacement)
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1))
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1)+0.02)
     elif action[1]==2:
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2))
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2)+0.02)
     elif action[1]==3:
         robot.arm.shift_pose(RobotAxis.Y, espacement)
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3))
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3)+0.02)
 
     print("Ouverture pince")
     robot.tool.release_with_tool()
@@ -95,14 +95,30 @@ def robothanoi(robot,action,p1,p2,p3):
     robot.arm.move_joints([0.0, 0.0, 0.0, 0.0, -math.pi/2, 0.0])
 
 def decalage(L):
-    h=0
-    for k in range (len(L)-2):
+    n=0
+    for k in range (len(L)-1):
         if L[k]!=0:
-            h=h+tailledisque
-    return(h)
+            n=n+1
+    if n==1:
+        n=0.014
+    elif n==2:
+        n=0.034
+    elif n==3:
+        n=0.057
+    elif n==4:
+        n=0.07
+    print(n)
+    return(n)
 
-
-
+"""
+def decalage(L):
+    n=0
+    for k in range (len(L)-1):
+        if L[k]!=0:
+            n=n+tailledisque
+    print(n)
+    return(n)
+"""
 
 
 
