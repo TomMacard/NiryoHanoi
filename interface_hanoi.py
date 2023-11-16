@@ -66,14 +66,17 @@ class HanoiTower(QMainWindow):
         """ Calcule la position y pour le nouveau disque sur la tour. """
         discs_on_tower = [item for item in self.scene.items() if isinstance(item, DraggableDisc) and item != disc and self.tower_center(tower_index) - 50 < item.x() + item.rect().width()/2 < self.tower_center(tower_index) + 50]
     
-        # La position initiale de y pour le bas de la tour
-        base_y_position = 500  # hauteur initiale
-    
+        # La position de y pour le bas de la tour
+        base_y_position = 500  # Position de y pour la base de la tour
+
+        # Calcule la hauteur totale des disques déjà sur la tour
         total_height_of_discs = sum(d.rect().height() for d in discs_on_tower)
-    
+
+        # Nouvelle position y pour le disque en déplacement
         new_y_position = base_y_position - total_height_of_discs - disc.rect().height()
 
         return new_y_position
+
 
 
 
