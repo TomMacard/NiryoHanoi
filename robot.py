@@ -56,6 +56,8 @@ def jeuhanoi():
     debut()
     niveau = choix_de_niveau()
 
+    choix = choix_manipulation()
+
     choixia= choix_ia()
 
     if not choixia:
@@ -73,14 +75,16 @@ def jeuhanoi():
 
     while continuer :
 
-        if not choixia:
-            if not choixvoix:
-                action = action_utilisateur()
-            else:
-                action = action_voix()
-        else:
+        if choix == "ia":
             (action,marqueur) = action_ia(jeu,action,marqueur)
-            time.sleep(0.7)
+        elif choix == "clavier":
+            action = action_utilisateur()
+        elif choix == "manette":
+            action = action_utilisateur()
+        elif choix == "voix":
+            action = action_voix()
+        else :
+            print("Rien à faire !")
 
         if action[0]==0 and action[1]==0 :
             continuer = False

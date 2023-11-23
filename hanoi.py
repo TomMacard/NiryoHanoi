@@ -20,6 +20,15 @@ def choix_de_niveau():
                 print("le nombre de disque doit être compris entre 1 et 8 !")
         except ValueError:
             print("Veuillez entrer un entier !")
+
+
+def choix_manipulation():
+    choix =""
+    while choix != "manette" and choix != "ia" and choix != "clavier" and choix != "voix" :
+        choix = input("Vous jouez avec :\n- tapez manette, pour utiliser la manette\n-taper ia, et laissez l'ia jouer\n-taper clavier, pour jouer avec le clavier\n-tapez voix, et parlez directement au robot\nEcrivez : ")
+    return choix
+
+
 def action_utilisateur():
     input_string = input("\nEntrez les numeros du piquet de depart, d'arrivée (ou 'q' pour quitter,'a' pour retourner en arriere) séparés par des virgules : ")
 

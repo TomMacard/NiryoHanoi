@@ -28,7 +28,7 @@ def action_voix():
                     commande = l.recognize_google(voix, language="fr-FR")
                     print("Commande : " +commande)
                     liste_mot_recup = commande.split(' ')
-                    return phrase_to_action(piquet1, piquet2, piquet3, quitter, retour, liste_mot_recup)
+                    return phrase_to_action(liste_mot_recup)
 
 
         except sr.WaitTimeoutError:
