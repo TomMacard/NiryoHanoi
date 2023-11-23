@@ -8,6 +8,7 @@ piquet3 = ["troisième", "dernier", "trois", "3", "droite", "droit"]
 quitter = ["quitter", "quitte", "kit", "arrêter", "arrête", "arrêt"]
 retour = ["annuler", "annule", "retour", "arrière", "retourne", "retourner"]
 
+
 def action_voix():
     l = sr.Recognizer()
 
