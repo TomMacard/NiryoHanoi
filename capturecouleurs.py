@@ -1,59 +1,96 @@
 import cv2
 import numpy as np
 
-def detect_colors(image):
+def detect_colors(image, hsv_values):
+    # Décomposition des valeurs HSV
+    low_h, high_h, low_s, high_s, low_v, high_v = hsv_values
+
     # Convertir l'image de l'espace couleur BGR à HSV
     hsv_frame = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     # Définir les plages de couleur pour la détection
-    lower_yellow = np.array([20, 100, 100])
-    upper_yellow = np.array([30, 255, 255])
+    lower_bound = np.array([low_h, low_s, low_v])
+    upper_bound = np.array([high_h, high_s, high_v])
 
-    lower_green = np.array([40, 40, 40])
-    upper_green = np.array([80, 255, 255])
+    # Créer le masque pour isoler la couleur dans l'image
+    mask = cv2.inRange(hsv_frame, lower_bound, upper_bound)
 
-    lower_red = np.array([0, 100, 100])
-    upper_red = np.array([10, 255, 255])
+    # Appliquer le masque à l'image originale pour obtenir la couleur détectée
+    result = cv2.bitwise_and(image, image, mask=mask)
 
-    lower_blue = np.array([100, 100, 100])
-    upper_blue = np.array([140, 255, 255])
+    return result
 
-    # Créer les masques pour isoler les couleurs dans l'image
-    mask_yellow = cv2.inRange(hsv_frame, lower_yellow, upper_yellow)
-    mask_green = cv2.inRange(hsv_frame, lower_green, upper_green)
-    mask_red = cv2.inRange(hsv_frame, lower_red, upper_red)
-    mask_blue = cv2.inRange(hsv_frame, lower_blue, upper_blue)
+def on_trackbar_change(_):
+    # Récupérer l'image sauvegardée
+    frame = cv2.imread('captured_frame.jpg')
 
-    # Appliquer les masques aux frames originales pour obtenir les couleurs détectées
-    result_yellow = cv2.bitwise_and(image, image, mask=mask_yellow)
-    result_green = cv2.bitwise_and(image, image, mask=mask_green)
-    result_red = cv2.bitwise_and(image, image, mask=mask_red)
-    result_blue = cv2.bitwise_and(image, image, mask=mask_blue)
+    # Lire les valeurs actuelles des trackbars
+    low_h = cv2.getTrackbarPos('Low H', 'Trackbars')
+    high_h = cv2.getTrackbarPos('High H', 'Trackbars')
+    low_s = cv2.getTrackbarPos('Low S', 'Trackbars')
+    high_s = cv2.getTrackbarPos('High S', 'Trackbars')
+    low_v = cv2.getTrackbarPos('Low V', 'Trackbars')
+    high_v = cv2.getTrackbarPos('High V', 'Trackbars')
 
-    # Fusionner les résultats dans une seule image
-    combined_result = cv2.add(result_yellow, result_green)
-    combined_result = cv2.add(combined_result, result_red)
-    combined_result = cv2.add(combined_result, result_blue)
+    hsv_values = (low_h, high_h, low_s, high_s, low_v, high_v)
+    result = detect_colors(frame, hsv_values)
 
-    # Afficher les résultats de la détection de couleur dans une seule fenêtre
-    cv2.imshow('Combined Results', combined_result)
-    cv2.waitKey(0)  # Attendre indéfiniment jusqu'à ce qu'une touche soit pressée
-    cv2.destroyAllWindows()
+    # Afficher le résultat
+    cv2.imshow('Detected Colors', result)
 
 def main():
-    # Capture vidéo à partir de la webcam intégrée
-    cap = cv2.VideoCapture(0)  # L'argument 0 indique la première webcam disponible
-
-    ret, frame = cap.read()  # Lecture d'une frame de la webcam
-
-    if not ret:
-        print("Aucune image capturée")
+    # Initialisation de la capture vidéo
+    cap = cv2.VideoCapture(0)
+    
+    # Capture d'une seule image
+    ret, frame = cap.read()
+    if ret:
+        cv2.imwrite('captured_frame.jpg', frame)
+    else:
+        print("Erreur lors de la capture de l'image")
         return
-
-    detect_colors(frame)
-
-    # Libérer la capture
     cap.release()
+
+    # Création d'une fenêtre pour les curseurs
+    cv2.namedWindow('Trackbars')
+
+    # Création des curseurs pour régler les valeurs HSV
+    cv2.createTrackbar('Low H', 'Trackbars', 0, 180, on_trackbar_change)
+    cv2.createTrackbar('High H', 'Trackbars', 180, 180, on_trackbar_change)
+    cv2.createTrackbar('Low S', 'Trackbars', 0, 255, on_trackbar_change)
+    cv2.createTrackbar('High S', 'Trackbars', 255, 255, on_trackbar_change)
+    cv2.createTrackbar('Low V', 'Trackbars', 0, 255, on_trackbar_change)
+    cv2.createTrackbar('High V', 'Trackbars', 255, 255, on_trackbar_change)
+
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            print("Aucune image capturée")
+            break
+
+        # Lecture des valeurs des curseurs
+        low_h = cv2.getTrackbarPos('Low H', 'Trackbars')
+        high_h = cv2.getTrackbarPos('High H', 'Trackbars')
+        low_s = cv2.getTrackbarPos('Low S', 'Trackbars')
+        high_s = cv2.getTrackbarPos('High S', 'Trackbars')
+        low_v = cv2.getTrackbarPos('Low V', 'Trackbars')
+        high_v = cv2.getTrackbarPos('High V', 'Trackbars')
+
+        hsv_values = (low_h, high_h, low_s, high_s, low_v, high_v)
+        result = detect_colors(frame, hsv_values)
+
+        # Affichage du résultat
+        cv2.imshow('Detected Colors', result)
+
+        # Attendre la touche 'q' pour quitter
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    # Attendre indéfiniment jusqu'à ce qu'une touche soit pressée
+    cv2.waitKey(0)
+
+    # Nettoyage
+    cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()
