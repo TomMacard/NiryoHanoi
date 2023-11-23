@@ -22,6 +22,7 @@ import time
 def jeuhanoi():
 
     robot=connexion_robot(iprobot)
+    robot.led_ring.rainbow_chase(0.1,100)
     debut()
     
     niveau = choix_de_niveau()
@@ -48,7 +49,7 @@ def jeuhanoi():
         elif choix == "manette" or choix == "m":
             action = action_utilisateur()
         elif choix == "voix" or choix == "v":
-            action = action_voix()
+            action = action_voix(robot)
         else :
             print("Rien à faire !")
 
@@ -70,7 +71,11 @@ def jeuhanoi():
                 jeu.sauvegarder_dep(action[0], action[1])
                 dpl = dpl + 1
                 print(">> Nombre de déplacements : ", dpl)
+            else:
+                robot.led_ring.alternate([[255,0,0],[0,0,255]], 0.5, 10, False)
         else:
+            if robot:
+                robot.led_ring.alternate([[255,0,0],[0,0,255]], 0.5, 10, False)
             print("On arrive jamais ici !")
 
         if(jeu.jeu_resolu()):
@@ -78,6 +83,7 @@ def jeuhanoi():
             continuer = False 
 
     if robot:
+        robot.led_ring.rainbow_chase(0.1)
         deconnexion_robot(robot)
 
 jeuhanoi()

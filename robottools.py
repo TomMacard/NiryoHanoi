@@ -1,6 +1,10 @@
 from pyniryo2 import *
 import math
 
+
+
+
+
 def connexion_robot(iprobot):
     # connexion, calibration
 
@@ -29,6 +33,7 @@ def connexion_robot(iprobot):
     print("Positionnement initial...")
     robot.arm.move_joints([0.0, 0.0, 0.0, 0.0, -math.pi/2, 0.0])
     print("OK")
+
     return(robot)
 
 def deconnexion_robot(robot):
@@ -98,13 +103,15 @@ def robothanoi(robot,action,p1,p2,p3):
 
     print("Mouvement 1")
     if action[0]==1:
+        robot.led_ring.flash([15, 50, 255], 0.5, 1, False)
         robot.arm.shift_pose(RobotAxis.Y, -espacement)
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1))
     elif action[0]==2:
+        robot.led_ring.flash([15, 50, 255], 0.5, 2, False)
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2))
     elif action[0]==3: 
+        robot.led_ring.flash([15, 50, 255], 0.5, 3, False)
         robot.arm.shift_pose(RobotAxis.Y, espacement)
-
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3))
 
     print("Ferme pince")
@@ -116,11 +123,14 @@ def robothanoi(robot,action,p1,p2,p3):
 
     print("Mouvement 2")
     if action[1]==1:
+        robot.led_ring.flash([15, 50, 255], 0.5, 1, False)
         robot.arm.shift_pose(RobotAxis.Y, -espacement)
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1)+lachage)
     elif action[1]==2:
+        robot.led_ring.flash([15, 50, 255], 0.5, 2, False)
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2)+lachage)
     elif action[1]==3:
+        robot.led_ring.flash([15, 50, 255], 0.5, 3, False)
         robot.arm.shift_pose(RobotAxis.Y, espacement)
         robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3)+lachage)
 

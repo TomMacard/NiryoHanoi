@@ -1,6 +1,7 @@
 
 import speech_recognition as sr
 from fuzzywuzzy import fuzz
+from pyniryo2 import *
 
 piquet1 = ["premier", "un", "1", "gauche","1er"]
 piquet2 = ["deuxième", "deux", "2", "milieu", "centre", "2e"]
@@ -11,7 +12,7 @@ retour = ["annuler", "annule", "retour", "arrière", "retourne", "retourner"]
 ratio=95
 
 
-def action_voix():
+def action_voix(robot):
     l = sr.Recognizer()
 
     l.energy_threshold=2000 #par défaut 300
@@ -25,6 +26,7 @@ def action_voix():
 
                 while not action:
                     print('Donnez vos instructions au robot...')
+                    robot.led_ring.snake([255,128,0],1,10)
                     voix = l.listen(source, timeout=10)
                     print('Analyse...')
                     commande = l.recognize_google(voix, language="fr-FR")
