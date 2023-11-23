@@ -22,9 +22,8 @@ import time
 def jeuhanoi():
 
     robot=connexion_robot(iprobot)
-    if not robot:
-        print("ATTENTION PAS DE ROBOT DETECTE, VOUS JOUEZ EN MODE ORDINATEUR !!!")
     debut()
+    
     niveau = choix_de_niveau()
     choix = choix_manipulation()
 
@@ -40,13 +39,15 @@ def jeuhanoi():
 
     while continuer :
 
-        if choix == "ia":
+        if choix == "ia" or choix == "i" :
             (action,marqueur) = action_ia(jeu,action,marqueur)
-        elif choix == "clavier":
+            if not robot:
+                time.sleep(0.7)
+        elif choix == "clavier" or choix == "c":
             action = action_utilisateur()
-        elif choix == "manette":
+        elif choix == "manette" or choix == "m":
             action = action_utilisateur()
-        elif choix == "voix":
+        elif choix == "voix" or choix == "v":
             action = action_voix()
         else :
             print("Rien à faire !")
@@ -61,10 +62,10 @@ def jeuhanoi():
 
         elif action[0]!= -1 and action[1] != -1:
 
-            if robot:
-                robothanoi(robot,action,jeu.piquet1,jeu.piquet2,jeu.piquet3)
-
             if jeu.deplacer_disque(action[0], action[1]) == 0:
+
+                if robot:
+                    robothanoi(robot,action,jeu.piquet1,jeu.piquet2,jeu.piquet3)
                 jeu.dessine_jeu()
                 jeu.sauvegarder_dep(action[0], action[1])
                 dpl = dpl + 1
@@ -74,8 +75,9 @@ def jeuhanoi():
 
         if(jeu.jeu_resolu()):
             print("\n * * * Félicitations !! * * *")
-            continuer = False
-        
+            continuer = False 
+
+    if robot:
         deconnexion_robot(robot)
 
 jeuhanoi()

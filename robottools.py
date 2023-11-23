@@ -86,7 +86,8 @@ def mouvrelatif(robot):
 
 espacement=0.16
 tailledisque=0.030
-hauteur=0.252
+hauteur=0.238
+lachage=-0.01
 
 def robothanoi(robot,action,p1,p2,p3):
 
@@ -116,12 +117,12 @@ def robothanoi(robot,action,p1,p2,p3):
     print("Mouvement 2")
     if action[1]==1:
         robot.arm.shift_pose(RobotAxis.Y, -espacement)
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1)+0.02)
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p1)+lachage)
     elif action[1]==2:
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2)+0.02)
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p2)+lachage)
     elif action[1]==3:
         robot.arm.shift_pose(RobotAxis.Y, espacement)
-        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3)+0.02)
+        robot.arm.shift_pose(RobotAxis.Z, -hauteur+decalage(p3)+lachage)
 
     print("Ouverture pince")
     robot.tool.release_with_tool()
@@ -139,7 +140,7 @@ def decalage(L):
     elif n==2:
         n=0.034
     elif n==3:
-        n=0.057
+        n=0.0575
     elif n==4:
         n=0.07
     return(n)

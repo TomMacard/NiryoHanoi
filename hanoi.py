@@ -23,9 +23,10 @@ def choix_de_niveau():
 
 
 def choix_manipulation():
+    Lchoix=["manette","m","ia","i","clavier","c","voix","v"]
     choix =""
-    while choix != "manette" and choix != "ia" and choix != "clavier" and choix != "voix" :
-        choix = input("Vous jouez avec :\n- tapez manette, pour utiliser la manette\n-taper ia, et laissez l'ia jouer\n-taper clavier, pour jouer avec le clavier\n-tapez voix, et parlez directement au robot\nEcrivez : ")
+    while choix not in Lchoix:
+        choix = input("Vous jouez avec :\n- La manette, taper 'manette' ou 'm'\n- Laisser l'IA jouer, taper 'ia' ou 'i'\n- Le clavier, taper 'clavier ou 'c'\n-Utiliser les commandes vocales, taper 'voix' ou 'v'\nChoix : ")
     return choix
 
 
