@@ -57,13 +57,6 @@ def jeuhanoi():
     niveau = choix_de_niveau()
 
     choix = choix_manipulation()
-    
-    """
-    choixia= choix_ia()
-
-    if not choixia:
-        choixvoix=choix_voix()
-    """
 
     marqueur=(0,0) # 1er chiffre: dernier mouvement du petit, 2eme : si le dernier mouvement etait le petit
     action=(0,0)
@@ -94,7 +87,7 @@ def jeuhanoi():
             if jeu.annuler_dernier_mouvement():
                 jeu.dessine_jeu()
                 dpl = dpl + 1
-            print(">> Nombre de dépalcements : ", dpl)
+            print(">> Nombre de déplacements : ", dpl)
 
         elif action[0]!= -1 and action[1] != -1:
 
@@ -104,7 +97,7 @@ def jeuhanoi():
                 jeu.dessine_jeu()
                 jeu.sauvegarder_dep(action[0], action[1])
                 dpl = dpl + 1
-                print(">> Nombre de dépalcements : ", dpl)
+                print(">> Nombre de déplacements : ", dpl)
         else:
             print("On arrive jamais ici !")
 
