@@ -51,7 +51,7 @@ def mouvrelatif(robot):
 
 espacement=0.16
 tailledisque=0.030
-hauteur=0.25
+hauteur=0.252
 
 def robothanoi(robot,action,p1,p2,p3):
 
