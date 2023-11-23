@@ -15,47 +15,17 @@ from pyniryo2 import *
 import math
 from robottools import *
 from voix import *
-
-# connexion, calibration
-print("Connexion...")
-try:
-    robot = NiryoRobot(iprobot)
-    print("OK")
-except:
-    print("ERREUR : Pas de connexion")
-
-print("Calibration...")
-if robot.arm.need_calibration():
-    robot.arm.calibrate_auto()
-print("OK")
-
-
-# equiper outil
-print("Equipement pince...")
-try:
-    robot.tool.update_tool()
-    print("OK")
-except:
-    print("ERREUR : Pas d'outil")
-
-print("Positionnement initial...")
-robot.arm.move_joints([0.0, 0.0, 0.0, 0.0, -math.pi/2, 0.0])
-print("OK")
-
-######### CODE
-
-#mouvement(robot)
-#mouvrelatif(robot)
-
 from hanoi import *
 from ia import *
 import time
 
 def jeuhanoi():
-    
+
+    robot=connexion_robot(iprobot)
+    if not robot:
+        print("ATTENTION PAS DE ROBOT DETECTE, VOUS JOUEZ EN MODE ORDINATEUR !!!")
     debut()
     niveau = choix_de_niveau()
-
     choix = choix_manipulation()
 
     marqueur=(0,0) # 1er chiffre: dernier mouvement du petit, 2eme : si le dernier mouvement etait le petit
@@ -91,7 +61,8 @@ def jeuhanoi():
 
         elif action[0]!= -1 and action[1] != -1:
 
-            robothanoi(robot,action,jeu.piquet1,jeu.piquet2,jeu.piquet3)
+            if robot:
+                robothanoi(robot,action,jeu.piquet1,jeu.piquet2,jeu.piquet3)
 
             if jeu.deplacer_disque(action[0], action[1]) == 0:
                 jeu.dessine_jeu()
@@ -104,16 +75,8 @@ def jeuhanoi():
         if(jeu.jeu_resolu()):
             print("\n * * * Félicitations !! * * *")
             continuer = False
+        
+        deconnexion_robot(robot)
 
 jeuhanoi()
 
-
-######### FIN CODE
-
-
-# déconnexion
-print("Déconnexion...")
-robot.arm.move_to_home_pose()
-robot.tool.release_with_tool()
-robot.end()
-print("OK")
