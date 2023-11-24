@@ -288,10 +288,10 @@ class TourHanoi:
         # Annule le dernier mouvement en restaurant l'état précédent des piquets
         if self.deps_prec:
             dernier_dep = self.deps_prec.pop()
-            print(dernier_dep[1])
-            print(dernier_dep[0]) 
+            #print(dernier_dep[1])
+            #print(dernier_dep[0]) 
             self.deplacer_disque(dernier_dep[1], dernier_dep[0])
-            return True
+            return (True, (dernier_dep[1],dernier_dep[0]))
         else:
             print("Aucun mouvement à annuler.")
-            return False
+            return (False,False)

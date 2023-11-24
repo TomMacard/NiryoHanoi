@@ -1,9 +1,17 @@
+########################################
+
+
+espacement=0.16
+tailledisque=0.030
+hauteur=0.238
+lachage=-0.015
+
+
+########################################
+
+
 from pyniryo2 import *
 import math
-
-
-
-
 
 def connexion_robot(iprobot):
     # connexion, calibration
@@ -88,11 +96,6 @@ def mouvrelatif(robot):
             m=int(m)
 
 
-
-espacement=0.16
-tailledisque=0.030
-hauteur=0.238
-lachage=-0.01
 
 def robothanoi(robot,action,p1,p2,p3):
 
