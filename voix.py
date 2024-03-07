@@ -25,6 +25,7 @@ def action_voix(robot):
                 l.adjust_for_ambient_noise(source, duration=1)
 
                 while not action:
+                    print('\n'*30)
                     print('Donnez vos instructions au robot...')
                     robot.led_ring.snake([255,128,0],1,10)
                     voix = l.listen(source, timeout=10)
