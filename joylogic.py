@@ -1,4 +1,5 @@
 import pygame
+import time
 
 class JoystickControl:
     def __init__(self):
@@ -15,21 +16,24 @@ class JoystickControl:
         var = False
         continuer = True
         while(continuer):
+            time.sleep(1)
             for event in pygame.event.get():
                 if event.type == pygame.JOYBUTTONDOWN:
+                    #print(event)
                     # Un bouton a été appuyé
                     if event.button == 1:  # Bouton A
                         print("bouton A")
                         if var == False:
                             position1 = 3
                             var = True
-                            print(var)
                         else:
                             position2 = 3
                             print(position1)
                             print(position2)
                             continuer = False
+                            var = False
                             self.deplacement = (position1, position2)
+                            self.joystick.quit()
                             break
                     elif event.button == 2:  # Bouton Y
                         print("bouton Y")
@@ -41,7 +45,9 @@ class JoystickControl:
                             print(position1)
                             print(position2)
                             continuer = False
+                            var = False
                             self.deplacement = (position1, position2)
+                            self.joystick.quit()
                             break
                     elif event.button == 3:  # Bouton X
                         print("bouton X")
@@ -53,8 +59,26 @@ class JoystickControl:
                             print(position1)
                             print(position2)
                             continuer = False
+                            var = False
                             self.deplacement = (position1, position2)
+                            self.joystick.quit()
                             break
+                    elif event.button == 0:  # Bouton B
+                        print("bouton B")
+                        position1 = -2
+                        position2 = -2
+                        self.deplacement = (position1, position2)
+                        continuer = False
+                        self.joystick.quit()
+                        break
+                    elif event.button == 6:  # Bouton -
+                        print("bouton -")
+                        position1 = 0
+                        position2 = 0
+                        self.deplacement = (position1, position2)
+                        continuer = False
+                        self.joystick.quit()
+                        break
 
     def get_deplacement(self):
             return self.deplacement
@@ -66,8 +90,8 @@ def recupererDeplacementManette():
     try:
         joystick_control = JoystickControl()
         joystick_control.run()
-        return joystick_control.get_deplacement()
+        dep = joystick_control.get_deplacement()
+        joystick_control.joystick.quit()
+        return dep
     except KeyboardInterrupt:
         pass
-
-print(recupererDeplacementManette())
