@@ -19,6 +19,8 @@ from voix import *
 from hanoi import *
 from ia import *
 import time
+from joylogic import *
+from pyniryo2.vision import *
 
 rejouer=1
 
@@ -27,6 +29,13 @@ if robot:
     robot.led_ring.rainbow_chase(0.1,100)
 debut()
 
+'''
+vis = Vision(robot)
+img_compressed = vis.get_img_compressed()
+camera_info = vis.get_camera_intrinsics()
+img = vis.uncompress_image(img_compressed)
+img = vis.undistort_image(img, camera_info.intrinsics, camera_info.distortion)
+'''
 
 while rejouer:
 
@@ -52,7 +61,7 @@ while rejouer:
         elif choix == "clavier" or choix == "c":
             action = action_utilisateur()
         elif choix == "manette" or choix == "m":
-            action = action_utilisateur()
+            action = recupererDeplacementManette()
         elif choix == "voix" or choix == "v":
             action = action_voix(robot)
         else :
