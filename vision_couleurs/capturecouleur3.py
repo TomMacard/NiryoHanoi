@@ -19,7 +19,7 @@ def detect_colors(image):
         mask = cv2.inRange(hsv_frame, lower_bound, upper_bound)
         result = cv2.bitwise_and(image, image, mask=mask)
         
-        # Vous pouvez ici ajouter une logique pour vérifier si le résultat n'est pas vide, 
+        # possibilité  d'ajouter une logique pour vérifier si le résultat n'est pas vide, 
         # indiquant la présence de la couleur dans la partie de l'image.
         if np.sum(mask) > 0:  # Vérification sommaire de la présence de la couleur
             detected_colors[color] = True
@@ -61,9 +61,9 @@ def capture_and_detect():
         if color not in detected_colors_right:
             detected_colors_right[color] = False
 
-    print("Couleurs détectées à gauche : ", detected_colors_left)
-    print("Couleurs détectées au centre : ", detected_colors_center)
-    print("Couleurs détectées à droite : ", detected_colors_right)
+    print("Pilier détectées à gauche : ", detected_colors_left)
+    print("Pilier détectées au centre : ", detected_colors_center)
+    print("Pilier détectées à droite : ", detected_colors_right)
 
     # Afficher l'image capturée avec des zones où les couleurs ont été détectées
     cv2.imshow('Captured Image', frame)
