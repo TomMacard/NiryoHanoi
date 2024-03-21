@@ -6,7 +6,7 @@
 ########################################
 
 
-iprobot="10.10.101.34"
+iprobot=""
 
 
 ########################################
@@ -21,6 +21,7 @@ from ia import *
 import time
 from joylogic import *
 from pyniryo2.vision import *
+import interface6 as gui
 
 rejouer=1
 
@@ -36,6 +37,8 @@ camera_info = vis.get_camera_intrinsics()
 img = vis.uncompress_image(img_compressed)
 img = vis.undistort_image(img, camera_info.intrinsics, camera_info.distortion)
 '''
+
+
 
 while rejouer:
 
@@ -59,7 +62,19 @@ while rejouer:
             if not robot:
                 time.sleep(0.7)
         elif choix == "clavier" or choix == "c":
-            action = action_utilisateur()
+            gui.tour1 = jeu.piquet1
+            gui.tour1.reverse()
+            del(gui.tour1[0])
+            gui.tour2 = jeu.piquet2
+            gui.tour2.reverse()
+            del(gui.tour2[0])
+            gui.tour3 = jeu.piquet3
+            gui.tour3.reverse()
+            del(gui.tour3[0])
+            gui.main_gui()
+
+            print("Après interface !")
+            #action = action_utilisateur()
         elif choix == "manette" or choix == "m":
             action = recupererDeplacementManette()
         elif choix == "voix" or choix == "v":
