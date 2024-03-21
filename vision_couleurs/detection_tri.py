@@ -53,7 +53,7 @@ def get_current_game_state(image_path):
     return game_state
 
 # Image de test (remplacer par le chemin de mon image réelle)
-image_path = '/mnt/data/IMG_9674.png'
+image_path = '/Users/abderrahmanebenali/Downloads/IMG_9674.png'  
 game_state = get_current_game_state(image_path)
 
 # Afficher l'état du jeu
