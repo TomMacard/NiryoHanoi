@@ -9,12 +9,6 @@ COLOR_RANGES = {
     "jaune": ((25, 100, 100), (35, 255, 255)),
 }
 
-# Après la création du masque jaune
-if color == 'jaune':
-    cv2.imshow('Masque Jaune', mask)
-    cv2.waitKey(0)
-
-
 def detect_colors(image):
     hsv_frame = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     detected_colors = {}
@@ -36,6 +30,11 @@ def detect_colors(image):
             detected_colors[color] = True
         else:
             detected_colors[color] = False
+            
+            # Après la création du masque jaune
+    if color == 'jaune':
+        cv2.imshow('Masque Jaune', mask)
+        cv2.waitKey(0)
 
     return detected_colors
 
