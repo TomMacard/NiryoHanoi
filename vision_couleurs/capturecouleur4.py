@@ -27,7 +27,7 @@ def detect_colors(image):
         # Détection basée sur la surface de couleur détectée
         color_pixels = np.sum(mask)
         total_pixels = image.shape[0] * image.shape[1]
-        if color_pixels / total_pixels > 0.30:  # Seuil de détection ajusté
+        if color_pixels / total_pixels > 0.01:  # Seuil de détection ajusté
             detected_colors[color] = True
         else:
             detected_colors[color] = False
