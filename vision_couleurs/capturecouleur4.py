@@ -33,9 +33,9 @@ def detect_colors(image):
             detected_colors[color] = False
             
             # Après la création du masque jaune
-    if color == 'jaune':
-        cv2.imshow('Masque Jaune', mask)
-        cv2.waitKey(0)
+    #if color == 'jaune':
+        #cv2.imshow('Masque Jaune', mask)
+        #cv2.waitKey(0)
 
     return detected_colors
 
