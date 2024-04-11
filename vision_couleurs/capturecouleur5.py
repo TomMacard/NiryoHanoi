@@ -65,7 +65,7 @@ def capture_and_detect():
     if all(detected_colors_left.values()) and not any(detected_colors_center.values()) and not any(detected_colors_right.values()):
         message = "Toutes les pièces ont bien été placées à gauche. La partie peut commencer."
     else:
-        message = "Le jeu ne peut pas commencer car les pièces n'ont pas été correctement positionnées. Veuillez placer les pieces correctement s'il vous plait"
+        message = "Le jeu ne peut pas commencer car les pièces n'ont pas été correctement positionnées. Veuillez placer les pièces correctement s'il vous plait"
 
     print(message)
     speak_message(message)
